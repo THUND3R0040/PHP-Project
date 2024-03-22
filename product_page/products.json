@@ -1,0 +1,158 @@
+
+  [
+    {   "name":"Sneakers Shoes",
+        "doc": "Orange Chese Casual Shoes for kids",
+        "type": "kids",
+        "price": "30$",
+        "img": "products imgs/p1.jpg",
+        "overlay": "p2.jpg",
+        "ft":"true",
+        "bs":"true"
+    },
+    {   
+        "name": "Brown Leather Shoes Boots",
+        "doc": "Brown leather boots for women",
+        "type": "women",
+        "price": "20$",
+        "img": "products imgs/p3.jpg",
+        "overlay": "p4.jpg",
+        "ft": "true",
+        "bs": "false"
+    },
+    {   
+        "name": "Formel Shoes",
+        "doc": "Black Formel Shoes for Men",
+        "type": "men",
+        "price": "30$",
+        "img": "products imgs/p5.jpg",
+        "overlay": "p6.jpg",
+        "ft": "false",
+        "bs": "false"
+    },
+    {
+        "name": "Air Max 97 undefeated - Black Volt",
+        "doc": "Nike Air Max for kids",
+        "type": "kids",
+        "price": "30$",
+        "img": "products imgs/p7.jpg",
+        "overlay": "p8.jpg",
+        "ft": "true",
+        "bs": "false"
+    },
+    {
+        "name": "High Heels",
+        "doc": "Pink High Heels for women",
+        "type": "women",
+        "price": "100$",
+        "img": "products imgs/p9.jpg",
+        "overlay": "p10.jpg",
+        "ft": "true",
+        "bs": "true"
+
+    },
+    {
+        "name": "Brown Leather Shoes",
+        "doc": "Brown Leather Shoes for Men",
+        "type": "men",
+        "price": "50$",
+        "img": "products imgs/p11.jpg",
+        "overlay": "p12.jpg",
+        "ft": "true",
+        "bs": "false"
+
+    },
+    {   
+        "name": "Nike Air Jordan 1",
+        "doc": "Red Air Jordan 1 for Men",
+        "type": "men",
+        "price": "149$",
+        "img": "products imgs/p13.jpg",
+        "overlay": "p14.jpg",
+        "ft": "false",
+        "bs": "true"
+    },
+    {
+        "name": "Nike Air Max 2021",
+        "doc": "Nike Black Sneakers for Kids",
+        "type": "kids",
+        "price": "10000$",
+        "img": "products imgs/p15.jpg",
+        "overlay": "p16.jpg",
+        "ft": "true",
+        "bs": "true"
+    },
+    {
+        "name": "Chuck 70 Classic montante",
+        "doc": "Converse Sneakers for kids",
+        "type": "kids",
+        "price": "30$",
+        "img": "products imgs/p17.jpg",
+        "overlay": "p18.jpg",
+        "ft": "false",
+        "bs": "false"
+    },
+    {
+        "name": "White High Heeles",
+        "doc": "White High Heeled Shoes for Women",
+        "type": "women",
+        "price": "47$",
+        "img": "products imgs/p19.jpg",
+        "overlay": "p20.jpg",
+        "ft": "true",
+        "bs": "false"
+    },
+    {
+        "name": "Red High Sandals",
+        "doc": "Red Leather Peep Toe Heeled Sandals for Women",
+        "type": "women",
+        "price": "97$",
+        "img": "products imgs/p21.jpg",
+        "overlay": "p22.jpg",
+        "ft": "true",
+        "bs": "false"
+    }
+    ,{
+        "name": "White Adidas Sneakers",
+        "doc": "White Adidas Sneakers for Kids",
+        "type": "kids",
+        "price": "50$",
+        "img": "products imgs/p23.jpg",
+        "overlay": "p24.jpg",
+        "ft": "false",
+        "bs": "true"
+    },
+    {
+        "name": "Black Adidas Sneakers",
+        "doc": "Black Adidas Sneakers for Kids",
+        "type": "kids",
+        "price": "49$",
+        "img": "products imgs/p25.jpg",
+        "overlay": "p26.jpg",
+        "ft": "false",
+        "bs": "false"
+    },
+    {
+        "name": "Black leather Boots",
+        "doc": "Black leather Boots for Men",
+        "type": "men",
+        "price": "63$",
+        "img": "products imgs/p27.jpg",
+        "overlay": "p28.jpg",
+        "ft": "true",
+        "bs": "true"
+    },
+    {
+        "name": "Red leather Formel shoes",
+        "doc": "Red leather Formel shoes for Men",
+        "type": "men",
+        "price": "29$",
+        "img": "products imgs/p29.jpg",
+        "overlay": "p30.jpg",
+        "ft": "true",
+        "bs": "true"
+    }
+    
+
+
+
+]

@@ -47,7 +47,7 @@
                 </div>
                 <div class="links">
                     <a href="../login/login.php"  id="a4"data-aos="fade-right">LOGIN</a>
-                    <a href="../product page/product.php" id="a1" data-aos="fade-right">PRODUCTS</a>
+                    <a href="../product_page/product.php" id="a1" data-aos="fade-right">PRODUCTS</a>
                     <a href="#con" id="a2" data-aos="fade-right">CONTACT</a>
 
                 </div>
@@ -126,9 +126,9 @@
     
     
     <div class="phone">
-        <a href="../products/product.php" id="href1">Products</a>
+        <a href="../product_page/product.php" id="href1">Products</a>
         <a href="#con" id="href2">Contact</a>
-        <a href="login.html" id="href4">Login</a>
+        <a href="../login/login.php" id="href4">Login</a>
         <i class="far fa-window-close" id="close"></i>
     </div>
     

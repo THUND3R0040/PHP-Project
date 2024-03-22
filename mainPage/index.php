@@ -66,9 +66,9 @@
     </section>
 
     <div class="phone">
-        <a href="product page/product.html" id="href1">Products</a>
+        <a href="../product_page/product.php" id="href1">Products</a>
         <a href="#con" id="href2">Contact</a>
-        <a href="login/login.html" id="href4">Account</a>
+        <a href="../login/login.php" id="href4">Account</a>
         <i class="far fa-window-close" id="close"></i> 
     </div>
 
