@@ -763,7 +763,6 @@ header{
   height: 70%;
   opacity: 0;
   transition: 0.5s ;
-  
   background-size: cover;
   background-position: center;
 }
