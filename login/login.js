@@ -181,6 +181,7 @@ signin.addEventListener("click",()=>{
     inp[1].style.display="none";
     signin.innerHTML="Sign Up";
     no.innerHTML="Sign In";
+    no.setAttribute("name","signin");
     no.style.marginTop="20px";
     test=1;
 }
@@ -196,6 +197,7 @@ else{
         no.innerHTML = "Sign Up";
         no.style.marginTop = "10px";
         test=0;
+        no.setAttribute("name","signup");
 
 }
 });

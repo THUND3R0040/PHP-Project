@@ -1,5 +1,64 @@
 <?php
-    include('../database/db_connect.php');
+    require 'email_activation.php';
+    require '../database/db_connect.php';
+    session_start();
+    
+    
+    if(isset($_POST['signup'])){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
+        send_activation_mail($email, "1234", $name);
+        //$sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`) VALUES ('$name', '$email', '$password')";
+        //$result = mysqli_query($conn, $sql);
+        //if($result){
+          //  send_activation_mail($email, "1234");
+            //header("Location: login.php");
+        //}else{
+          //  echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        //}
+
+    }
+    
+    
+    
+    
+    
+    
+//mba3d f login check if user is activated
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if(isset($_POST['login'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+        $result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result) > 0){
+            $_SESSION['email'] = $email;
+            header('Location: ../product_page/product.php');
+        }else{
+            echo "Invalid email or password";
+        }
+    }
+
+
+
+
+
+
 ?>
 
 
@@ -90,24 +149,26 @@
                     Sign In
                 </button>
             </div>
-            <div class="fr2">
+            <form class="fr2" method="post" action="login.php">
                 <h1>
                     Create Account
                 </h1>
+               
                 <div class="inputWithIcon"data-aos="zoom-in-left">
-                    <input type="text" placeholder="Name" class="inpt">
+                    <input type="text" placeholder="Name" class="inpt" name="name">
                     <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
                 <div class="inputWithIcon"data-aos="zoom-in-left">
-                    <input type="email" placeholder="Email" class="inpt">
+                    <input type="email" placeholder="Email" class="inpt" name="email">
                     <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
                 <div class="inputWithIcon"data-aos="zoom-in-left">
-                    <input type="password" placeholder="Password" class="inpt">
+                    <input type="password" placeholder="Password" class="inpt" name = "password">
                     <i class="fas fa-unlock-alt fa-lg fa-fw" aria-hidden="true"></i>
                     
                 </div>
-                <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000">Sign Up</button>
+                <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000" name="signup">Sign Up</button>
+                
             </div>
         </div>
     

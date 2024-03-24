@@ -33,3 +33,12 @@ VALUES
     ('Black Adidas Sneakers', 'Black Adidas Sneakers for Kids', 'kids', '49$', 'products imgs/p25.jpg', 'p26.jpg', 'false', 'false'),
     ('Black leather Boots', 'Black leather Boots for Men', 'men', '63$', 'products imgs/p27.jpg', 'p28.jpg', 'true', 'true'),
     ('Red leather Formel shoes', 'Red leather Formel shoes for Men', 'men', '29$', 'products imgs/p29.jpg', 'p30.jpg', 'true', 'true');
+
+
+
+create table users(
+    u_id int primary key auto_increment,
+    u_name varchar(255) not null,
+    u_email varchar(255) not null,
+    u_password varchar(255) not null
+);
