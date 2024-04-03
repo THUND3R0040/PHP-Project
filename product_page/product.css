@@ -322,7 +322,7 @@ header{
     left: auto;
     transition: all .2s ease-in-out;
     display: flex;
-    z-index: 7779;
+    z-index: 7779000000;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;

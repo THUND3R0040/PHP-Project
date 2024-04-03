@@ -1,86 +1,20 @@
 <?php
-    require 'email_activation.php';
-    require '../database/db_connect.php';
-    session_start();
-    
-    
-    if(isset($_POST['signup'])){
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
-        send_activation_mail($email, "1234", $name);
-        //$sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`) VALUES ('$name', '$email', '$password')";
-        //$result = mysqli_query($conn, $sql);
-        //if($result){
-          //  send_activation_mail($email, "1234");
-            //header("Location: login.php");
-        //}else{
-          //  echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        //}
-
-    }
-    
-    
-    
-    
-    
-    
-//mba3d f login check if user is activated
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    if(isset($_POST['login'])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result) > 0){
-            $_SESSION['email'] = $email;
-            header('Location: ../product_page/product.php');
-        }else{
-            echo "Invalid email or password";
-        }
-    }
-
-
-
-
-
-
+require 'email_activation.php';
+require 'activation_code_generator.php';
+require '../database/db_connect.php';
+session_start();
 ?>
-
 
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    
-    
-    
-    
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    
-    
     <meta charset="UTF-8">
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,20 +24,23 @@
     <script src="https://use.fontawesome.com/a183c5deb5.js"></script>
     <script src="https://kit.fontawesome.com/9d07734ae2.js" crossorigin="anonymous"></script>
     <link href="login.css" rel="stylesheet">
-    
-    
 </head>
-
-
-
-
-
     <body>
-    
 
 
-    
-    
+    <div class="activation-alert">
+        An activation Link has been sent to your Email
+    </div>
+
+    <div class="notActiveAlert">
+        Your account is not activated yet. Please check your email for the activation link.
+    </div>
+
+    <div class="invalidMailOrPassword">
+        Invalid email or password
+    </div>
+
+
     <header>
         <nav class="nav">
             <div class="navbar">
@@ -169,7 +106,7 @@
                 </div>
                 <button class="sign-up"data-aos="zoom-in-up" data-aos-duration="2000" name="signup">Sign Up</button>
                 
-            </div>
+            </form>
         </div>
     
     
@@ -325,3 +262,126 @@
         </script>
 </body>
 </html>
+<?php
+    
+    
+    
+    if(isset($_POST['signup'])){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
+        $query = "SELECT * FROM users WHERE u_email = '$email'";
+        $result = mysqli_query($conn, $query);
+        if(mysqli_num_rows($result) > 0){
+            echo"
+            <div style='position:absolute;top:0;width:100vw;height:60px;z-index:9999999;'>
+                <h1>Email already exists</h1>
+            </div>
+            ";
+        }else{
+            $activation_code = generate_activation_code();
+            $sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`) VALUES ('$name', '$email', '$password')";
+            $result = mysqli_query($conn, $sql);
+            if($result){
+                if($activation_mail_is_sent = send_activation_mail($email, $activation_code, $name)){
+                    echo"<script>
+                    activation_alert.style.display = 'flex';
+                    setTimeout(() => {
+                        activation_alert.style.display = 'none';
+                    }, 5000);
+                    </script>";
+                }
+                else{
+                    echo"<script>
+                    activation_alert.innerHTML = 'Could not send activation mail. Please try again later.';
+                    activation_alert.style.display = 'flex';
+                    setTimeout(() => {
+                        activation_alert.style.display = 'none';
+                        activation_alert.innerHTML = 'An activation Link has been sent to your Email';
+                    }, 5000);
+                    </script>";
+                }
+                header("Location: login.php");
+            }else{
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+//mba3d f login check if user is activated
+    
+    
+    if(isset($_POST['signin'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $sql = "SELECT * FROM users WHERE u_email = '$email';";
+        $result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result) > 0){
+            $Row = mysqli_fetch_assoc($result);
+            if(password_verify($password, $Row['u_password'])){
+                if($Row['isActive'] == 0){
+                    echo"<script>
+                        notActiveAlert.style.display = 'flex';
+                        setTimeout(() => {
+                            notActiveAlert.style.display = 'none';
+                        }, 5000);
+                    </script>";
+                }
+                else{
+                    $_SESSION['email'] = $email;
+                    $_SESSION['name'] = $Row['u_name'];
+                    $_SESSION['isAdmin'] = $Row['isAdmin'];
+                    echo"
+                    <script>
+                        window.location.href = '../product_page/product.php';
+                    </script>";
+                    //header didnt work i knew the reason but couldnt fix it
+                    
+                }
+            }
+            else{
+                echo"<script>
+                    invalidMailOrPassword.style.display = 'flex';
+                    setTimeout(() => {
+                        invalidMailOrPassword.style.display = 'none';
+                    }, 5000);
+                </script>";
+            }
+        }      
+        else{
+            echo"<script>
+                invalidMailOrPassword.style.display = 'flex';
+                setTimeout(() => {
+                    invalidMailOrPassword.style.display = 'none';
+                }, 5000);
+            </script>";
+        }      
+            
+            
+            
+
+    }
+
+    if(isset($_SESSION['loginNeeded'])){
+        echo"
+        <script>
+            invalidMailOrPassword.innerHTML = 'You Need To Login First';
+            invalidMailOrPassword.style.display = 'flex';
+            setTimeout(() => {
+                invalidMailOrPassword.style.display = 'none';
+                invalidMailOrPassword.innerHTML = 'Invalid Email or Password';
+            }, 5000);
+        </script>";
+        unset($_SESSION['loginNeeded']);
+    }
+
+
+
+
+
+?>

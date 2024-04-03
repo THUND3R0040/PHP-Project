@@ -17,7 +17,7 @@ function send_activation_mail($email,$activation_code,$name){
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'mohamedgargouri97@gmail.com';
-    $mail->Password = 'b';
+    $mail->Password = 'zgcy bdcq mpxi yaeb';
     $mail->Port = 587;
     $mail->AddAddress($email, $name);
     $mail->SetFrom("wardaslim23112@gmail.com","ClickShop");
@@ -48,7 +48,7 @@ function send_activation_mail($email,$activation_code,$name){
             </p>
             <p style='margin: 30px 0;'>
               <!-- The link should lead to the activation URL -->
-              <a href='http://localhost/WebProject/login/activate.php?email=$email&code=$activation_code' style='font-size:26px;background-color: #4fa284; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>
+              <a href='http://localhost/x/WebProject/login/activate.php?email=$email&code=$activation_code' style='font-size:26px;background-color: #4fa284; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>
                 Activate Account
               </a>
             </p>
@@ -70,9 +70,9 @@ function send_activation_mail($email,$activation_code,$name){
     $mail->isHTML(true);
     try{
         $mail->Send();
-        echo "Success!";
+        return true;
     } catch(Exception $e){
-        echo "Fail - " . $mail->ErrorInfo;
+        return false;
     }
 }
 ?>

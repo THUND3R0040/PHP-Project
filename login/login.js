@@ -178,7 +178,7 @@ let test = 0;
 signin.addEventListener("click",()=>{
     if(test==0){
     h1.innerHTML="Login";
-    inp[1].style.display="none";
+    inp[0].style.display="none";
     signin.innerHTML="Sign Up";
     no.innerHTML="Sign In";
     no.setAttribute("name","signin");
@@ -192,7 +192,7 @@ signin.addEventListener("click",()=>{
 else{
     
         h1.innerHTML = "Create Account";
-        inp[1].style.display = "block";
+        inp[0].style.display = "block";
         signin.innerHTML = "Sign In";
         no.innerHTML = "Sign Up";
         no.style.marginTop = "10px";
@@ -252,3 +252,8 @@ for (let i = 0; i < dd.length; i++) {
     });
 }
 
+
+
+let activation_alert =  document.querySelector('.activation-alert');
+let notActiveAlert = document.querySelector('.notActiveAlert');
+let invalidMailOrPassword = document.querySelector('.invalidMailOrPassword');

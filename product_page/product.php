@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    include '../database/db_connect.php';
+    
+   
+    
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,7 +147,39 @@
 
     <div class="main">
         <div class="cart_full">
+            <?php
+                if(isset($_SESSION['email'])){
+                    $email = $_SESSION['email'];
+                    $query = "SELECT p.* FROM cart c, users u,product p WHERE u.u_email = c.u_email and p.p_name = c.p_name AND u.u_email = '$email'";
+                    $result = mysqli_query($conn, $query);
+                    
+                    while($row = mysqli_fetch_array($result)){
+                        $name = $row['p_name'];
+                        $price = $row['p_price'];
+                        $img = $row['p_img'];
+                        $doc = $row['p_doc'];
+                        
+                        echo "
+                        <div class='cart_items'>
+                            <img src='$img' class='cart-item'>
+                            <div class='c-div'>
+                                <span class='cart-price'>$name</span>
+                                <span class='c-note'>$doc</span>
+                                <span class='cart-quantity'>$price</span>
+                            </div>
+                            <button class='remove-btn'>
+                            <i class='' aria-hidden='true' data-fa-i2svg=''><svg class='svg-inline--fa fa-trash-alt fa-w-14' aria-hidden='true' focusable='false' data-prefix='fas' data-icon='trash-alt' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' data-fa-i2svg=''><path fill='currentColor' d='M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z'></path></svg></i>
+                            </button>
+                        </div>
+                        ";
+                    }
+                    
+                }
+                
 
+
+
+            ?>
 
         </div>
 
@@ -205,17 +248,61 @@
 
 
 <div class="categ">
-    <select class="inpt form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected value="all">All</option>
-        <option value="ft">Featured</option>
-        <option value="bs">Best Selling</option>
-    </select>
+    <form method="get" action="product.php">
+        <select class="inpt form-select form-select-lg mb-3" id="inpt" aria-label=".form-select-lg example" name="filter">
+            <option selected value="all">All</option>
+            <option value="ft">Featured</option>
+            <option value="bs">Best Selling</option>
+        </select>
+    </form>
     <i class="fas fa-plus plus"></i>
 </div>
 
 
 <section class="container1">
+<?php
+
     
+
+    $query = "SELECT * FROM product";
+    $result = mysqli_query($conn, $query);
+
+    while($row = mysqli_fetch_array($result)){
+        $p_overlay = $row['p_overlay'];
+        $img = $row['p_img'];
+        $p_name = $row['p_name'];
+        $p_price = $row['p_price'];
+        $p_doc = $row['p_doc'];
+        $p_type = $row['p_type'];
+        $p_ft = $row['p_ft'];
+        $p_bs = $row['p_bs'];
+        echo "
+        <div class='pr'>
+        <div class='overlay' style='background-image: url($p_overlay);'></div>
+        <img class='pro' src='$img'>
+        <span class='lorem'>$p_name</span>
+        <span class='price'>$p_price</span>
+        
+            <input type='hidden' name='p_name' value='$p_name' class='hiddenName'>
+            <input type='hidden' name='p_price' value='$p_price'>
+            <input type='hidden' name='p_img' value='$img'>
+            <input type='hidden' name='p_doc' value='$p_doc'>
+            <input type='hidden' name='p_type' value='$p_type'>
+            <input type='hidden' name='p_ft' value='$p_ft'>
+            <input type='hidden' name='p_bs' value='$p_bs'>
+            <button class='glow-on-hover'>Buy</button>
+        
+        </div>";
+    }
+
+    // change cart table structure and then add xmlhttprequest to add to cart database without refreshing the page
+
+    
+    
+
+
+
+?>
 </section>
 
 
@@ -330,3 +417,28 @@
 <script src="product.js"></script>
 
 </html>
+
+<?php
+    if(isset($_SESSION['name'])){
+        $parts = explode(" ", $_SESSION['name']);
+        $name = $parts[0];
+        if($_SESSION['isAdmin'] == 1){
+            echo "<script>document.getElementById('a4').innerHTML='Hi, $name';</script>";
+            echo"<script>document.getElementById('href4').innerHTML='Hi, $name';</script>";
+            echo "<script>document.getElementById('a4').href='../adminInterface/admin.php';</script>";
+            echo"<script>document.getElementById('href4').href='../adminInterface/admin.php';</script>";
+        }
+        else{
+            echo "<script>document.getElementById('a4').innerHTML='Hi, $name';</script>";
+            echo"<script>document.getElementById('href4').innerHTML='Hi, $name';</script>";
+            echo "<script>document.getElementById('a4').href='../interface/userAccount.php';</script>";
+            echo"<script>document.getElementById('href4').href='../interface/userAccount.php';</script>";
+        }
+    }
+    else{
+        echo "<script>document.getElementById('a4').innerHTML='LOGIN';</script>";
+        echo "<script>document.getElementById('a4').href='../login/login.php';</script>";
+        echo "<script>document.getElementById('href4').innerHTML='LOGIN';</script>";
+        echo "<script>document.getElementById('href4').href='../login/login.php';</script>";
+    }
+?>

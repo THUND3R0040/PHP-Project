@@ -411,17 +411,31 @@ let checkout = document.querySelector(".checkout");
 
 
 
+const sendXmlHttpRequest = (name) =>{
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'removeFromCart.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            if(xhr.responseText=="u need to login"){
+                window.location.href = "../login/login.php";
+            }}};
+    let data = "productName=" + name;
+    xhr.send(data);
+}
 
 
 
-       
-    
+
+
 setInterval(() => {
     let remove_item = document.querySelectorAll(".remove-btn");
     let cart_items = document.querySelectorAll(".cart_items");
+    let cartNames = document.querySelectorAll(".cart-price");
     for (let t = 0; t < remove_item.length; t++) {
         remove_item[t].addEventListener("click", () => {
             cart_items[t].remove();
+            sendXmlHttpRequest(cartNames[t].innerHTML);
         })
     }
 }, 10)
@@ -466,17 +480,17 @@ setInterval(function () {
 
 
 
-
-
-
+let products;
 
 
 
 async function get() {
     const url = "products.json";
     const response = await fetch(url);
-    let products = await response.json();
-    console.log(products);
+    products = await response.json();
+    products.sort((a,b)=>a.name.localeCompare(b.name));
+    
+    /*
     for (let i = 0; i < products.length; i++) {
        // let type = products[i].type;
         //span3 = document.createElement("span");
@@ -514,7 +528,7 @@ async function get() {
         product.appendChild(span2);
         product.appendChild(add);
         container1.appendChild(product);
-    }
+    }*/
     let pr = document.querySelectorAll(".pr");
     //let genre = document.querySelectorAll(".genre");
 
@@ -553,10 +567,10 @@ async function get() {
         kid.fadeOut();
         for (let i = 0; i < pr.length; i++) {
             if (products[i].type == "kids" || products[i].type == "men") {
-                pr[i].style.position="absolute";
-                pr[i].style.left="-9999px";
+                pr[i].style.position = "absolute";
+                pr[i].style.left = "-9999px";
                 pr[i].style.top = "-9999px";
-                
+
             }
         }
     });
@@ -570,9 +584,14 @@ async function get() {
         kid.fadeIn();
         for (let i = 0; i < pr.length; i++) {
             pr[i].style.position = "static";
-            
+
         }
     })
+
+
+    let prices = document.querySelectorAll(".price");
+    let names = document.querySelectorAll(".lorem");
+
     let btn = document.querySelectorAll(".glow-on-hover");
     for (let i = 0; i < btn.length; i++) {
         
@@ -590,8 +609,8 @@ async function get() {
             div.classList="c-div";
             span5.classList="c-note";
             icon.classList.add("fa-trash-alt");
-            span3.innerHTML = `${products[i].price}`;
-            span2.innerHTML = `${products[i].name}`;
+            span3.innerHTML = `${prices[i].innerHTML}`;
+            span2.innerHTML = `${names[i].innerHTML}`;
             span5.innerHTML = `${products[i].doc}`;
             span1.src = `${products[i].img}`;
             span1.classList ="cart-item";
@@ -612,22 +631,22 @@ async function get() {
 
         })
     }
-    
-    
-    let inpt = document.querySelector(".inpt");
-  
-                
-                    inpt.addEventListener("change", () => {
-                        if (inpt.value == "ft") {
-                            for (let i = 0; i < products.length; i++) {
-                                if (pr[i].style.display = "none") {
-                                    pr[i].style.display = "flex";
-                                    if (products[i].ft == "false") {
-                                        pr[i].style.display = "none";
-                                    }
-                    
 
-                    
+
+    let inpt = document.querySelector(".inpt");
+
+
+    inpt.addEventListener("change", () => {
+        if (inpt.value == "ft") {
+            for (let i = 0; i < products.length; i++) {
+                if (pr[i].style.display = "none") {
+                    pr[i].style.display = "flex";
+                    if (products[i].ft == "false") {
+                        pr[i].style.display = "none";
+                    }
+
+
+
 
                 }
             }
@@ -639,23 +658,26 @@ async function get() {
                     if (products[i].bs == "false") {
                         pr[i].style.display = "none";
                     }
-                        
-                    
-                
-            
-                }}}
 
 
 
-        else if(inpt.value=="all"){
-            for(let i = 0;i<pr.length;i++){
-                pr[i].style.display="flex";
+
+                }
             }
         }
-})}
-    
 
-    
+
+
+        else if (inpt.value == "all") {
+            for (let i = 0; i < pr.length; i++) {
+                pr[i].style.display = "flex";
+            }
+        }
+    })
+}
+
+
+
 
 
 
@@ -681,10 +703,42 @@ get();
 
 
 
+function addToCart(id) {
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+    
+    // Configure the AJAX request
+    xhr.open('POST', 'cart.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
+    
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Request was successful, handle response if needed
+            if(xhr.responseText == "u need to login") {
+                window.location.href = "../login/login.php";
+                
+            }
+            console.log(xhr.status);
+        } else {
+            // Request failed
+            console.error('Request failed with status ' + xhr.status);
+        }
+    };
 
+    // Prepare the data to send
+    var data = 'product_id=' + id;
 
+    // Send the AJAX request
+    xhr.send(data);
+}
 
+let names = document.querySelectorAll(".lorem");
+let btn = document.querySelectorAll(".glow-on-hover");
+
+for(let i = 0; i < btn.length; i++) {
+    btn[i].addEventListener('click', ()=>addToCart(products[i].name));
+}
 
 
 

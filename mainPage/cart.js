@@ -94,12 +94,12 @@ function ft(i) {
     cart_item.appendChild(span4);
     cart_full.appendChild(cart_item);
     cart_item.classList = "cart_items";
-    
-   console.log(i);
 
-    }
+    console.log(i);
 
-setInterval(()=>{
+}
+
+setInterval(() => {
     let remove_item = document.querySelectorAll(".remove-btn");
     let cart_items = document.querySelectorAll(".cart_items");
     for (let t = 0; t < remove_item.length; t++) {
@@ -107,7 +107,7 @@ setInterval(()=>{
             cart_items[t].remove();
         })
     }
-},10)
+}, 10)
 
 
 
@@ -151,20 +151,21 @@ setInterval(function () {
 let sm = document.querySelectorAll(".sm");
 let dd = document.querySelectorAll(".dd");
 
-for(let i=0;i<dd.length;i++){
-$(document).ready(function () {
-    $(sm[i]).mouseover(function () {
-        $(dd[i]).css("color", "black");
-        $(dd[i]).css("font-size", "30px");
+for (let i = 0; i < dd.length; i++) {
+    $(document).ready(function () {
+        $(sm[i]).mouseover(function () {
+            $(dd[i]).css("color", "black");
+            $(dd[i]).css("font-size", "30px");
+        });
     });
-});
 
-$(document).ready(function () {
-    $(sm[i]).mouseout(function () {
-        $(dd[i]).css("color", "white");
-        $(dd[i]).css("font-size", "26px");
+    $(document).ready(function () {
+        $(sm[i]).mouseout(function () {
+            $(dd[i]).css("color", "white");
+            $(dd[i]).css("font-size", "26px");
+        });
     });
-});}
+}
 
 
 
