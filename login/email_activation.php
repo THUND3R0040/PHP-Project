@@ -17,7 +17,7 @@ function send_activation_mail($email,$activation_code,$name){
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'mohamedgargouri97@gmail.com';
-    $mail->Password = 'zgcy bdcq mpxi yaeb';
+    $mail->Password = '';
     $mail->Port = 587;
     $mail->AddAddress($email, $name);
     $mail->SetFrom("wardaslim23112@gmail.com","ClickShop");
