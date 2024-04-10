@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-
+include "../const.php";
 
 
 //Load Composer's autoloader
@@ -16,8 +16,8 @@ function send_activation_mail($email,$activation_code,$name){
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'mohamedgargouri97@gmail.com';
-    $mail->Password = '';
+    $mail->Username = mail;
+    $mail->Password = pass;
     $mail->Port = 587;
     $mail->AddAddress($email, $name);
     $mail->SetFrom("wardaslim23112@gmail.com","ClickShop");

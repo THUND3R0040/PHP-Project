@@ -61,3 +61,5 @@ document.querySelector('.svg').addEventListener('click', function(){
 let activation_alert =  document.querySelector('.activation-alert');
 
 
+
+

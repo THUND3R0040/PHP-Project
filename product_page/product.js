@@ -411,15 +411,25 @@ let checkout = document.querySelector(".checkout");
 
 
 
-const sendXmlHttpRequest = (name) =>{
+ checkout.addEventListener("click", () => {
+    let price = document.querySelector(".money").innerHTML;
+    let nbItems = document.querySelector(".num").innerHTML;
+    window.location.href = `checkout.php?price=${price}&nbItems=${nbItems}`;
+});
+
+
+
+const sendXmlHttpRequest = (name) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'removeFromCart.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-            if(xhr.responseText=="u need to login"){
+            if (xhr.responseText == "u need to login") {
                 window.location.href = "../login/login.php";
-            }}};
+            }
+        }
+    };
     let data = "productName=" + name;
     xhr.send(data);
 }
@@ -475,209 +485,110 @@ setInterval(function () {
 
 }, 1);
 
+let prices;
+let btn;
+let names;
+
+
+let kidClicked = 0;
+let manClicked = 0;
+let womenClicked = 0;
+let everyoneClicked = 1;
 
 
 
 
+const get = () => {
 
-let products;
-
-
-
-async function get() {
-    const url = "products.json";
-    const response = await fetch(url);
-    products = await response.json();
-    products.sort((a,b)=>a.name.localeCompare(b.name));
-    
-    /*
-    for (let i = 0; i < products.length; i++) {
-       // let type = products[i].type;
-        //span3 = document.createElement("span");
-       // span3.innerHTML = type;
-        //span3.classList = "genre";
-        //fet = document.createElement("span");
-        //fet.innerHTML =products[i].ft;
-        //fet.classList = "fet";
-        //bs = document.createElement("span");
-        //bs.innerHTML = products[i].bs;
-        //bs.classList = "bs";
-        let overlay = document.createElement("div");
-        overlay.style.backgroundImage = `url(${products[i].overlay})`;
-        overlay.classList = "overlay";
-        let product = document.createElement("div");
-        let img = document.createElement("img");
-        let span1 = document.createElement("span");
-        span1.innerHTML = `${products[i].name}`;
-        let span2 = document.createElement("span");
-        let add = document.createElement("button");
-        add.innerHTML = "Buy";
-        add.classList = "glow-on-hover";
-        span2.innerHTML = products[i].price;
-        span1.classList = "lorem";
-        span2.classList = "price";
-        img.classList = "pro";
-        product.classList = "pr";
-        //product.appendChild(span3);
-       // product.appendChild(fet);
-        //product.appendChild(bs);
-        img.src = products[i].img;
-        product.appendChild(overlay);
-        product.appendChild(img);
-        product.appendChild(span1);
-        product.appendChild(span2);
-        product.appendChild(add);
-        container1.appendChild(product);
-    }*/
-    let pr = document.querySelectorAll(".pr");
-    //let genre = document.querySelectorAll(".genre");
 
     kid.click(function () {
         man.fadeOut();
         women.fadeOut();
-        for (let i = 0; i < products.length; i++) {
-            if (products[i].type == "women" || products[i].type == "men") {
-                pr[i].style.position = "absolute";
-                pr[i].style.left = "-9999px";
-                pr[i].style.top = "-9999px";
-
-            }
-        }
-
-
+        kidClicked = 1;
+        manClicked = 0;
+        womenClicked = 0;
+        everyoneClicked = 0;
+        cartUi();
     });
 
 
     man.click(function () {
         kid.fadeOut();
         women.fadeOut();
-
-        for (let i = 0; i < pr.length; i++) {
-            if (products[i].type == "kids" || products[i].type == "women") {
-                pr[i].style.position = "absolute";
-                pr[i].style.left = "-9999px";
-                pr[i].style.top = "-9999px";
-
-            }
-        }
+        manClicked = 1;
+        kidClicked = 0;
+        womenClicked = 0;
+        everyoneClicked = 0;
+        cartUi();
     });
 
     women.click(function () {
         man.fadeOut();
         kid.fadeOut();
-        for (let i = 0; i < pr.length; i++) {
-            if (products[i].type == "kids" || products[i].type == "men") {
-                pr[i].style.position = "absolute";
-                pr[i].style.left = "-9999px";
-                pr[i].style.top = "-9999px";
-
-            }
-        }
+        womenClicked = 1;
+        kidClicked = 0;
+        manClicked = 0;
+        everyoneClicked = 0;
+        cartUi();
     });
 
 
     let everyone = document.querySelector(".typed");
-
-    everyone.addEventListener("click", () => {
-        man.fadeIn();
-        women.fadeIn();
-        kid.fadeIn();
-        for (let i = 0; i < pr.length; i++) {
-            pr[i].style.position = "static";
-
-        }
-    })
-
-
-    let prices = document.querySelectorAll(".price");
-    let names = document.querySelectorAll(".lorem");
-
-    let btn = document.querySelectorAll(".glow-on-hover");
-    for (let i = 0; i < btn.length; i++) {
-        
-        btn[i].addEventListener("click", () => {
-            
-
-            let span1 = document.createElement("img");
-            let div = document.createElement("div");
-            let span2 = document.createElement("span");
-            let span5 = document.createElement("span");
-            let span3 = document.createElement("span");
-            let span4 = document.createElement("button");
-            let icon = document.createElement("i");
-            icon.classList = "fas";
-            div.classList="c-div";
-            span5.classList="c-note";
-            icon.classList.add("fa-trash-alt");
-            span3.innerHTML = `${prices[i].innerHTML}`;
-            span2.innerHTML = `${names[i].innerHTML}`;
-            span5.innerHTML = `${products[i].doc}`;
-            span1.src = `${products[i].img}`;
-            span1.classList ="cart-item";
-            span2.classList ="cart-price";
-            span3.classList ="cart-quantity";
-            span4.appendChild(icon);
-            span4.classList="remove-btn";
-            let cart_item = document.createElement("div");
-            cart_item.appendChild(span1);
-            div.appendChild(span2);
-            div.appendChild(span5);
-            div.appendChild(span3);
-            cart_item.appendChild(div);
-            cart_item.appendChild(span4);
-            cart_full.appendChild(cart_item);
-            cart_item.classList="cart_items";
-
-
-        })
-    }
-
-
     let inpt = document.querySelector(".inpt");
 
 
+
+    everyone.addEventListener("click", () => {
+        everyoneClicked = 1;
+        kidClicked = 0;
+        manClicked = 0;
+        womenClicked = 0;
+        man.fadeIn();
+        women.fadeIn();
+        kid.fadeIn();
+        cartUi();
+
+    });
+
+
+
+
     inpt.addEventListener("change", () => {
-        if (inpt.value == "ft") {
-            for (let i = 0; i < products.length; i++) {
-                if (pr[i].style.display = "none") {
-                    pr[i].style.display = "flex";
-                    if (products[i].ft == "false") {
-                        pr[i].style.display = "none";
-                    }
+        cartUi();
+    });
 
 
 
-
-                }
-            }
-        }
-        else if (inpt.value == "bs") {
-            for (let i = 0; i < products.length; i++) {
-                if (pr[i].style.display = "none") {
-                    pr[i].style.display = "flex";
-                    if (products[i].bs == "false") {
-                        pr[i].style.display = "none";
-                    }
+    cartUi();
 
 
-
-
-                }
-            }
-        }
-
-
-
-        else if (inpt.value == "all") {
-            for (let i = 0; i < pr.length; i++) {
-                pr[i].style.display = "flex";
-            }
-        }
-    })
 }
 
+function renderProducts() {
+    return new Promise(resolve => {
+        let genre = "everyone";
+        if (kidClicked == 1) {
+            genre = "kid";
+        } else if (manClicked == 1) {
+            genre = "man";
+        } else if (womenClicked == 1) {
+            genre = "women";
+        }
 
-
+        let inptValue = inpt.value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'filter.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                container1.innerHTML = this.response;
+                resolve();
+            }
+        };
+        let data = "filter=" + inptValue + "&genre=" + genre;
+        xhr.send(data);
+    });
+}
 
 
 
@@ -690,15 +601,58 @@ let kid = $(".kid");
 let man = $(".man");
 let women = $(".women");
 
+
+
+
+
+
+
+const cartUi = async () => {
+    await renderProducts();
+    btn = document.querySelectorAll(".glow-on-hover");
+
+
+    for (let i = 0; i < btn.length; i++) {
+        btn[i].addEventListener('click', (e) => {
+            addToCart(e.target.parentElement.childNodes[5].innerHTML);
+            let span1 = document.createElement("img");
+            let div = document.createElement("div");
+            let span2 = document.createElement("span");
+            let span5 = document.createElement("span");
+            let span3 = document.createElement("span");
+            let span4 = document.createElement("button");
+            let icon = document.createElement("i");
+            icon.classList = "fas";
+            div.classList = "c-div";
+            span5.classList = "c-note";
+            icon.classList.add("fa-trash-alt");
+            span3.innerHTML = `${e.target.parentElement.childNodes[7].innerHTML}`;
+            span2.innerHTML = `${e.target.parentElement.childNodes[5].innerHTML}`;
+            span5.innerHTML = `${e.target.parentElement.childNodes[15].value}`;
+            span1.src = `${e.target.parentElement.childNodes[13].value}`;
+            span1.classList = "cart-item";
+            span2.classList = "cart-price";
+            span3.classList = "cart-quantity";
+            span4.appendChild(icon);
+            span4.classList = "remove-btn";
+            let cart_item = document.createElement("div");
+            cart_item.appendChild(span1);
+            div.appendChild(span2);
+            div.appendChild(span5);
+            div.appendChild(span3);
+            cart_item.appendChild(div);
+            cart_item.appendChild(span4);
+            cart_full.appendChild(cart_item);
+            cart_item.classList = "cart_items";
+        }
+        );
+    }
+
+
+};
+
+
 get();
-
-
-
-
-
-
-
-
 
 
 
@@ -706,18 +660,18 @@ get();
 function addToCart(id) {
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
-    
+
     // Configure the AJAX request
     xhr.open('POST', 'cart.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    
-    xhr.onload = function() {
+
+    xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             // Request was successful, handle response if needed
-            if(xhr.responseText == "u need to login") {
+            if (xhr.responseText == "u need to login") {
                 window.location.href = "../login/login.php";
-                
+
             }
             console.log(xhr.status);
         } else {
@@ -727,18 +681,12 @@ function addToCart(id) {
     };
 
     // Prepare the data to send
-    var data = 'product_id=' + id;
-
+    let data = 'product_id=' + id;
     // Send the AJAX request
     xhr.send(data);
 }
 
-let names = document.querySelectorAll(".lorem");
-let btn = document.querySelectorAll(".glow-on-hover");
 
-for(let i = 0; i < btn.length; i++) {
-    btn[i].addEventListener('click', ()=>addToCart(products[i].name));
-}
 
 
 

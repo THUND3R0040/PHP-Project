@@ -263,6 +263,10 @@ session_start();
 </body>
 </html>
 <?php
+    //date object
+
+
+    $now = date("Y-m-d");
     
     
     
@@ -280,7 +284,7 @@ session_start();
             ";
         }else{
             $activation_code = generate_activation_code();
-            $sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`) VALUES ('$name', '$email', '$password')";
+            $sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`,`regDate`) VALUES ('$name', '$email', '$password','$now')";
             $result = mysqli_query($conn, $sql);
             if($result){
                 if($activation_mail_is_sent = send_activation_mail($email, $activation_code, $name)){

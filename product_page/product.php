@@ -13,6 +13,7 @@
 <html lang="en">
 
 <head>
+
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -359,9 +360,23 @@
     <div class="sep2">
     </div>
 
+    
+        
+        <form action="contactForm.php" method="POST" class="form">
+            <textarea class="textarea" name="textContent" placeholder="Message"></textarea>
+            <button class="btn-success" name="submit" type="submit" >Submit</button>
+        </form>
+            
+        
+    
+
+    <div class="sep2"></div>
 
     <div class="half2">
+        
+
         <div class="icons">
+
             <button class="facebook sm" data-aos="zoom-in-right"data-aos-duration="500"><a href="https://www.facebook.com/ahmed.thunder.98" target="_blank"><i
                         class="fab fa-facebook-f dd"></i></a></button>
             <button class="twitter sm" data-aos="zoom-in-right" data-aos-duration="1000"><a href="https://twitter.com/THUNDER84630828" target="_blank"><i

@@ -59,7 +59,7 @@ session_start();
                 <div class="goBack">
                     Go Back
                 </div>
-
+                
             </div>
             <div class="content">
                 <div class="options">
@@ -100,6 +100,7 @@ session_start();
 
         </div>
     </section>
+
 </body>
 <script src="userAccount.js"></script>
 </html>

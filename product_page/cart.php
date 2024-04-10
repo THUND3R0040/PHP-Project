@@ -5,6 +5,9 @@ session_start();
 require('../database/db_connect.php');
 
 
+$date = date('Y-m-d');
+
+
 
 
 if(!isset($_SESSION['email'])){
@@ -21,7 +24,7 @@ elseif (isset($_SESSION['email'])) {
         // Get the product ID from the AJAX request
         $productId = ($_POST['product_id']);
 
-        $query = "insert into cart(u_email,p_name) values ('$email','$productId')";
+        $query = "insert into cart(u_email,p_name,addDate) values ('$email','$productId','$date')";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
