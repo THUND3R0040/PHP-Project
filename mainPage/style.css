@@ -24,6 +24,9 @@ body{
     scroll-behavior: smooth;
 }
 
+.btt{
+  z-index: 40 !important;
+}
 
 
 header{

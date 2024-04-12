@@ -1,10 +1,9 @@
-create database ecommerce;
+CREATE DATABASE ecommerce;
 use ecommerce;
 
 
-
 create table product(
-    p_name varchar(255) not null PRIMARY KEY,
+    p_name varchar(40) not null PRIMARY KEY,
     p_doc varchar(255) not null,
     p_type varchar(255) not null,
     p_price varchar(255) not null,
@@ -37,7 +36,7 @@ VALUES
 
 create table users(
     u_name varchar(255) not null,
-    u_email varchar(255) not null PRIMARY key,
+    u_email varchar(40) not null PRIMARY key,
     u_password varchar(255) not null,
     isAdmin TINYINT(1) not null DEFAULT 0,
     isActive TINYINT not NULL DEFAULT 0,
@@ -52,30 +51,30 @@ CREATE Table orders (
     total int NOT NULL,
     nbItems int NOT NULL,
     orderDate DATE NOT NULL
-)
+);
 
 
 CREATE Table months (
     month Date not NULL
-)
+);
 
-INSERT INTO months (month) VALUES("2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01");
+INSERT INTO months (month) VALUES("2024-01-01"), ("2024-02-01"), ("2024-03-01"), ("2024-04-01"), ("2024-05-01"), ("2024-06-01"), ("2024-07-01"), ("2024-08-01"), ("2024-09-01"), ("2024-10-01"), ("2024-11-01"), ("2024-12-01");
 
 
 CREATE table comments (
     c_id INT AUTO_INCREMENT PRIMARY KEY,
     c_email VARCHAR(255) NOT NULL,
     c_content VARCHAR(255) NOT NULL,
-    isAnswered TINYINT(1) NOT NULL DEFAULT 0,
-)
+    isAnswered TINYINT(1) NOT NULL DEFAULT 0
+);
+
+
 
 
 CREATE table cart (
     comm_id INT AUTO_INCREMENT PRIMARY KEY,
-    u_email VARCHAR(255) NOT NULL,
-    p_name VARCHAR(255) NOT NULL,
+    u_email VARCHAR(40) NOT NULL,
+    p_name VARCHAR(40) NOT NULL,
     addDate DATE NOT NULL,
-    FOREIGN key u_email REFERENCES users(u_email),
-    FOREIGN key p_name REFERENCES product(p_name)
-)
-
+    FOREIGN key (u_email) REFERENCES users(u_email),
+    FOREIGN key (p_name) REFERENCES product(p_name));

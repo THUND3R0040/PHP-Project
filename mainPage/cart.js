@@ -65,7 +65,8 @@ for(let i = 0;i < btn.length;i++){
 // fix el faza mte3 kif tenzel 3la zouz last items matejjemch t3awed tenzel 3al 1st item using 
 // foreach . and create arrays with the items and then use only the index u need without the for loop
 function ft(i) {
-    let span1 = document.createElement("img");
+    window.location.href = "../product_page/product.php";
+    /*let span1 = document.createElement("img");
     let div = document.createElement("div");
     let span2 = document.createElement("span");
     let span5 = document.createElement("span");
@@ -95,10 +96,10 @@ function ft(i) {
     cart_full.appendChild(cart_item);
     cart_item.classList = "cart_items";
 
-    console.log(i);
+    console.log(i);*/
 
 }
-
+/*
 setInterval(() => {
     let remove_item = document.querySelectorAll(".remove-btn");
     let cart_items = document.querySelectorAll(".cart_items");
@@ -107,9 +108,9 @@ setInterval(() => {
             cart_items[t].remove();
         })
     }
-}, 10)
+}, 10)*/
 
-
+/*
 
 
 setInterval(function () {
@@ -144,7 +145,7 @@ setInterval(function () {
 }, 1);
 
 
-
+*/
 
 
 
