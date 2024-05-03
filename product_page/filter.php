@@ -52,9 +52,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-    $result = mysqli_query($conn, $sql);
-    if(mysqli_num_rows($result) > 0){
-        while($row = mysqli_fetch_assoc($result)){
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    
+    
+    if($stmt->rowCount() > 0){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $p_overlay = $row['p_overlay'];
             $p_img = $row['p_img'];
             $p_name = $row['p_name'];

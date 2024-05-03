@@ -22,7 +22,8 @@ elseif (isset($_SESSION['email'])) {
         $productName = ($_POST['productName']);
 
         $query = "delete from cart where u_email='$email' and p_name='$productName'";
-        $result = mysqli_query($conn, $query);
+        $stmt = $conn->prepare($query);
+        $result = $stmt->execute();
 
         if ($result) {
             // Success

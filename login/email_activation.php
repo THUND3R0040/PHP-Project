@@ -70,8 +70,10 @@ function send_activation_mail($email,$activation_code,$name){
     $mail->isHTML(true);
     try{
         $mail->Send();
+        echo"sent";
         return true;
     } catch(Exception $e){
+        echo $e->errorMessage();
         return false;
     }
 }

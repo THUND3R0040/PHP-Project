@@ -1,25 +1,20 @@
 <?php
-
-
-
-
 include '../database/db_connect.php';
 
-
-
 $query = "
-select u_name as name, u_email as email , count(orderDate) as nbOrders , ifnull(sum(total),0) as totalSpent 
-from users u 
-left join orders o
-on o.email = u.u_email 
-group by u.u_email;
+    SELECT u_name AS name, u_email AS email, COUNT(orderDate) AS nbOrders, IFNULL(SUM(total), 0) AS totalSpent 
+    FROM users u 
+    LEFT JOIN orders o ON o.email = u.u_email 
+    GROUP BY u.u_email;
 ";
-$result = mysqli_query($conn, $query);
-$users = mysqli_num_rows($result);
+
+
+$stmt = $conn->prepare($query);
+$stmt->execute();
 
 $htmlUsers  = "";
 
-while($row = mysqli_fetch_array($result)){
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $htmlUsers .= "
     <div class='swiper-slide'>
         <div class='edit'>edit Profile</div>
@@ -50,10 +45,4 @@ while($row = mysqli_fetch_array($result)){
 if($htmlUsers == ""){
     $htmlUsers = "<h1 class='noUsers'>No Users</h1>";
 }
-
-
-
-
-
-
-
+?>

@@ -113,20 +113,7 @@ session_start();
     </section>
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
     
     
     <div class="phone">
@@ -135,26 +122,6 @@ session_start();
         <a href="../login/login.php" id="href4">Login</a>
         <i class="far fa-window-close" id="close"></i>
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -262,130 +229,11 @@ session_start();
         </script>
 </body>
 </html>
+
 <?php
-    //date object
 
-
-    $now = date("Y-m-d");
-    
-    
-    
-    if(isset($_POST['signup'])){
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
-        $query = "SELECT * FROM users WHERE u_email = '$email'";
-        $result = mysqli_query($conn, $query);
-        if(mysqli_num_rows($result) > 0){
-            echo"
-            <div style='position:absolute;top:0;width:100vw;height:60px;z-index:9999999;'>
-                <h1>Email already exists</h1>
-            </div>
-            ";
-        }else{
-            $activation_code = generate_activation_code();
-            $sql = "INSERT INTO users(`u_name`,`u_email`,`u_password`,`regDate`) VALUES ('$name', '$email', '$password','$now')";
-            $result = mysqli_query($conn, $sql);
-            if($result){
-                if($activation_mail_is_sent = send_activation_mail($email, $activation_code, $name)){
-                    echo"<script>
-                    activation_alert.style.display = 'flex';
-                    setTimeout(() => {
-                        activation_alert.style.display = 'none';
-                    }, 5000);
-                    </script>";
-                }
-                else{
-                    echo"<script>
-                    activation_alert.innerHTML = 'Could not send activation mail. Please try again later.';
-                    activation_alert.style.display = 'flex';
-                    setTimeout(() => {
-                        activation_alert.style.display = 'none';
-                        activation_alert.innerHTML = 'An activation Link has been sent to your Email';
-                    }, 5000);
-                    </script>";
-                }
-                header("Location: login.php");
-            }else{
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
-        }
-    }
-    
-    
-    
-    
-    
-    
-//mba3d f login check if user is activated
-    
-    
-    if(isset($_POST['signin'])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $sql = "SELECT * FROM users WHERE u_email = '$email';";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result) > 0){
-            $Row = mysqli_fetch_assoc($result);
-            if(password_verify($password, $Row['u_password'])){
-                if($Row['isActive'] == 0){
-                    echo"<script>
-                        notActiveAlert.style.display = 'flex';
-                        setTimeout(() => {
-                            notActiveAlert.style.display = 'none';
-                        }, 5000);
-                    </script>";
-                }
-                else{
-                    $_SESSION['email'] = $email;
-                    $_SESSION['name'] = $Row['u_name'];
-                    $_SESSION['isAdmin'] = $Row['isAdmin'];
-                    echo"
-                    <script>
-                        window.location.href = '../product_page/product.php';
-                    </script>";
-                    //header didnt work i knew the reason but couldnt fix it
-                    
-                }
-            }
-            else{
-                echo"<script>
-                    invalidMailOrPassword.style.display = 'flex';
-                    setTimeout(() => {
-                        invalidMailOrPassword.style.display = 'none';
-                    }, 5000);
-                </script>";
-            }
-        }      
-        else{
-            echo"<script>
-                invalidMailOrPassword.style.display = 'flex';
-                setTimeout(() => {
-                    invalidMailOrPassword.style.display = 'none';
-                }, 5000);
-            </script>";
-        }      
-            
-            
-            
-
-    }
-
-    if(isset($_SESSION['loginNeeded'])){
-        echo"
-        <script>
-            invalidMailOrPassword.innerHTML = 'You Need To Login First';
-            invalidMailOrPassword.style.display = 'flex';
-            setTimeout(() => {
-                invalidMailOrPassword.style.display = 'none';
-                invalidMailOrPassword.innerHTML = 'Invalid Email or Password';
-            }, 5000);
-        </script>";
-        unset($_SESSION['loginNeeded']);
-    }
-
-
-
-
+require 'signup.php';
+require 'signin.php';
+require 'loginNeeded.php';
 
 ?>

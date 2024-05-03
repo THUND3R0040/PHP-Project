@@ -18,25 +18,36 @@ if(isset($_POST["modify"])){
     $email = $_POST["email"];
     $newPassword = $_POST["new-password"];
     if($password != ""){
-        $sql = "SELECT * FROM users WHERE u_email = '$u_email';";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result) > 0){
-            $Row = mysqli_fetch_assoc($result);
+        $sql = "SELECT * FROM users WHERE u_email = :u_email;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':u_email', $u_email);
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+            $Row = $stmt->fetch(PDO::FETCH_ASSOC);
             if(password_verify($password, $Row['u_password'])){
                 if($name != ""){
-                    $sql = "UPDATE users SET u_name = '$name' WHERE u_email = '$u_email';";
-                    mysqli_query($conn, $sql);
+                    $sql = "UPDATE users SET u_name = :name WHERE u_email = :u_email;";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':u_email', $u_email);
+                    $stmt->execute();
                     $_SESSION["name"] = $name;
                 }
                 elseif($email != ""){
-                    $sql = "UPDATE users SET u_email = '$email' WHERE u_email = '$u_email';";
-                    mysqli_query($conn, $sql);
+                    $sql = "UPDATE users SET u_email = :email WHERE u_email = :u_email;";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':u_email', $u_email);
+                    $stmt->execute();
                     $_SESSION["email"] = $email;
                 }
                 elseif($newPassword != ""){
                     $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                    $sql = "UPDATE users SET u_password = '$newPassword' WHERE u_email = '$u_email';";
-                    mysqli_query($conn, $sql);
+                    $sql = "UPDATE users SET u_password = :newPassword WHERE u_email = :u_email;";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':newPassword', $newPassword);
+                    $stmt->bindParam(':u_email', $u_email);
+                    $stmt->execute();
                 }
                 $_SESSION["error"] = "0";
                 header("Location: ./userAccount.php");

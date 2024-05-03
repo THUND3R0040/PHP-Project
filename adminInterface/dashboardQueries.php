@@ -1,75 +1,84 @@
 <?php
 
-$query = "SELECT  * FROM    orders WHERE   orderDate BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();";
-$result = mysqli_query($conn, $query);
-$orders = mysqli_num_rows($result);
 $last30DaysOrders = 0;
 $numberOfOrders = 0;
-while($row = mysqli_fetch_array($result)){
+
+$sql = "SELECT * FROM orders WHERE orderDate BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $last30DaysOrders += $row['total'];
     $numberOfOrders++;
 }
 
 
-$query = "select * from orders ";
-$result = mysqli_query($conn, $query);
-$orders = mysqli_num_rows($result);
 $totalIncome = 0;
-while($row = mysqli_fetch_array($result)){
+
+$sql = "SELECT * FROM orders";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $totalIncome += $row['total'];
 }
 
 
-$query = "SELECT  * FROM    orders WHERE   orderDate = CURDATE();";
-$result = mysqli_query($conn, $query);
-$orders = mysqli_num_rows($result);
+
+
 $dailyIncome = 0;
-while($row = mysqli_fetch_array($result)){
+
+$sql = "SELECT * FROM orders WHERE orderDate = CURDATE()";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $dailyIncome += $row['total'];
 }
 
 
-$query = "SELECT  * FROM    users WHERE   regDate BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();";
-$result = mysqli_query($conn, $query);
-$users = mysqli_num_rows($result);
 $last30DaysUsers = 0;
-while($row = mysqli_fetch_array($result)){
+
+$sql = "SELECT * FROM users WHERE regDate BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $last30DaysUsers++;
 }
 
-$query = "SELECT  
-MONTH(m.month) AS mOrder, 
-ifnull(sum(total),0) AS total_num 
-from months m
-left join orders o
-on Month(m.month) = Month(o.orderDate)
 
-GROUP BY mOrder 
-ORDER BY mOrder asc;";
-
-$result = mysqli_query($conn, $query);
 
 $incomes = [];
-while($row = mysqli_fetch_array($result)){
-    $incomes[] = $row[1];
+
+$sql = "SELECT MONTH(m.month) AS mOrder, IFNULL(SUM(o.total), 0) AS total_num
+        FROM months m
+        LEFT JOIN orders o ON MONTH(m.month) = MONTH(o.orderDate)
+        GROUP BY mOrder
+        ORDER BY mOrder ASC";
+
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $incomes[] = $row['total_num'];
 }
 
 
-$query = "SELECT  
-MONTH(m.month) AS mOrder, 
-ifnull(count(total),0) AS total_num 
-from months m
-left join orders o
-on Month(m.month) = Month(o.orderDate)
-
-GROUP BY mOrder 
-ORDER BY mOrder asc;";
-$result = mysqli_query($conn, $query);
 $nbOrders = [];
-while($row = mysqli_fetch_array($result)){
-    $nbOrders[] = $row[1];
-}
 
+$sql = "SELECT MONTH(m.month) AS mOrder, IFNULL(COUNT(o.total), 0) AS total_num
+        FROM months m
+        LEFT JOIN orders o ON MONTH(m.month) = MONTH(o.orderDate)
+        GROUP BY mOrder
+        ORDER BY mOrder ASC";
+
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $nbOrders[] = $row['total_num'];
+}
 
 $htmlContent = "
         <article class='stats'>

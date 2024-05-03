@@ -1,30 +1,15 @@
-<?php 
-
-
-$sname= "localhost";
-$unmae= "root";
+<?php
+$servername = "localhost";
+$username = "root";
 $password = "";
-$db_name = "ecommerce";
-$conn = null;
+$dbname = "ecommerce";
 
-try{
-    $conn = new mysqli($sname, $unmae, $password, $db_name) ;
-}
-catch(Exception $e){
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
     header("Location: ../database/db-failed.php");
     die();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-?>

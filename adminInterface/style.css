@@ -875,7 +875,7 @@ padding-left: 25px;
   border: 1px solid #2cd5bf;
 }
 
-.popup .save,.editProductPopup .save{
+.popup .save,.editProductPopup .saveP{
   width: 45%;
   height: 40px;
   border-radius: 5px;
@@ -885,7 +885,7 @@ padding-left: 25px;
   cursor: pointer;
 }
 
-.popup .cancel,.editProductPopup .cancel{
+.popup .cancel ,.editProductPopup .cancelP {
   width: 45%;
   height: 40px;
   border-radius: 5px;
@@ -896,11 +896,11 @@ padding-left: 25px;
   border: 1px solid #a6adb4;
 }
 
-.popup .cancel:hover,.editProductPopup .cancel:hover{
+.popup .cancel:hover,.editProductPopup .cancelP:hover{
   background-color: #EFF2F5;
 }
 
-.popup .save:hover,.editProductPopup .save:hover{
+.popup .save:hover,.editProductPopup .saveP:hover{
   background-color: #26c5b0;
 }
 
